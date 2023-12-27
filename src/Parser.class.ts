@@ -1,4 +1,4 @@
-import {Puzzle} from "./Puzzle";
+import { Puzzle } from "./Puzzle.class";
 
 export class Parser {
 

@@ -1,4 +1,4 @@
-import { Parser } from "./parser";
+import { Parser } from "./Parser.class";
 
 const puzzle = new Parser().parse();
 console.log("Puzzle", puzzle);
