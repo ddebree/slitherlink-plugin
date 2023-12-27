@@ -3,10 +3,7 @@
   "name": "Slitherlink solver",
   "version": "1.0",
   "description": "Solve slitherlink puzzles",
-
-  "action": {
-    "default_popup": "popup.html"
-  },
+  "action": {},
   "icons": {
     "16": "images/icon-16.png",
     "32": "images/icon-32.png",
@@ -15,11 +12,18 @@
   },
   "content_scripts": [
     {
-      "js": ["scripts/content.js"],
+      "js": ["content.js"],
       "matches": [
         "https://www.puzzle-loop.com/",
         "https://www.puzzle-loop.com/*"
       ]
     }
-  ]
+  ],
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }
