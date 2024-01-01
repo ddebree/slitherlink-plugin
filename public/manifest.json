@@ -12,6 +12,7 @@
   },
   "content_scripts": [
     {
+      "world": "MAIN",
       "js": ["content.js"],
       "matches": [
         "https://www.puzzle-loop.com/",

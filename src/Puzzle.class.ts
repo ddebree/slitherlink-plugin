@@ -8,4 +8,29 @@ export class Puzzle {
         console.log("Vertical Lines", verticalMap);
     }
 
+    public getHeight(): number {
+        return this.cellMap.length;
+    }
+
+    public getWidth(): number {
+        return this.cellMap[0].length;
+    }
+
+    public setVerticalLinkToX(row: number, col: number) {
+        if (this.verticalMap[row][col] === " ") {
+            const verticalMapCopy = this.copyLinkMap(this.verticalMap);
+            return new Puzzle(this.cellMap, this.horizontalMap, this.verticalMap);
+        } else {
+            return this;
+        }
+    }
+
+    public setHorizontalLinkToX(row: number, col: number) {
+        return this;
+    }
+
+    private copyLinkMap(input: string[][]): string[][] {
+        return input;
+    }
+
 }

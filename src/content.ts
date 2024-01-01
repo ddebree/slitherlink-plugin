@@ -1,20 +1,25 @@
-import { Parser } from "./Parser.class";
+import { GameBridge } from "./GameBridge.class";
+import { Solver } from "./Solver.class";
 
-const puzzle = new Parser().parse();
-console.log("Puzzle", puzzle);
+function solve() {
+    const gameBridge = new GameBridge();
+    const puzzle = gameBridge.readPuzzleFromGame();
+    console.log("Puzzle", puzzle);
+    if (puzzle) {
+        const solvedPuzzle = new Solver().solve(puzzle);
+        gameBridge.writePuzzleToGame(solvedPuzzle);
+    }
+}
 
-const puzzleInfo = document.querySelector(".puzzleInfo");
-
+const puzzleInfo = document.querySelector("#btnReady");
 if (puzzleInfo) {
-    const button = document.createElement("button");
-    // Use the same styling as the publish information in an article's header
-    button.classList.add("color-secondary-text", "type--caption");
-    button.textContent = `Solve!`;
-
-    // <input class="button" type="submit" name="ready" id="btnReady" value="   Done   " title="Done [Enter]">
-
+    const button = document.createElement("input");
+    button.classList.add("button");
+    button.type = "button";
+    button.value = "Solve!";
+    button.title = "Solve!";
     button.addEventListener("click", (event) => {
-        alert("Something.");
+        solve();
         event.stopPropagation();
     }, false);
 
