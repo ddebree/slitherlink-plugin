@@ -1,6 +1,6 @@
-import {Puzzle} from "../Puzzle.class";
+import { Puzzle } from "../Puzzle.class";
 
-export class Operation {
+export class AbstractStrategy {
 
     public applyToPuzzle(puzzle: Puzzle): Puzzle {
         return puzzle;
@@ -8,7 +8,7 @@ export class Operation {
 
 }
 
-export class CellValueOperation extends Operation {
+export class AbstractCellWithValueStrategy extends AbstractStrategy {
 
     public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number): Puzzle {
         return puzzle;

@@ -1,12 +1,12 @@
-import { CellValueOperation } from "./Operation.class";
 import { LINK_STATE_SET, LINK_STATE_X, Puzzle } from "../Puzzle.class";
+import { AbstractCellWithValueStrategy } from "./AbstractStrategy.class";
 
 /**
  * This handles the case where a cell has a number in it, call it cellnum,
  * and the cell is surrounded by 4 - cellnum 'x' values.
  * In this case, the remaining slots must be links.
  */
-export class FillInLinks extends CellValueOperation {
+export class FillInLinksStrategy extends AbstractCellWithValueStrategy {
 
     public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number): Puzzle {
         const cellValue = puzzle.cellMap[row][col];

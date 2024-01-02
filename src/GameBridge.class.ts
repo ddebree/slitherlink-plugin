@@ -20,11 +20,14 @@ export class GameBridge {
         const height = Game.puzzleHeight;
         const width = Game.puzzleWidth;
 
-        console.log("Width", width);
-        console.log("Height", height);
-        console.log("Task", Game.task);
-        console.log("cellHorizontalStatus", Game.currentState.cellHorizontalStatus);
-        console.log("cellVerticalStatus", Game.currentState.cellVerticalStatus);
+        console.log("Data from the internal Game object",
+            {
+                "width": width,
+                "height": height,
+                "task": Game.task,
+                "cellHorizontalStatus": Game.currentState.cellHorizontalStatus,
+                "cellVerticalStatus": Game.currentState.cellVerticalStatus
+            });
 
         const cellMap: number[][] = Array.from(Array(height), () => new Array(width));
         const horizontalMap: string[][] = Array.from(Array(height + 1), () => new Array(width));
@@ -75,7 +78,11 @@ export class GameBridge {
         }
         stateString += "|";
 
-        console.log("Writing state string: ", stateString);
+        console.log("Writing Data to the internal Game object",
+            {
+                "puzzle": puzzle,
+                "stateString": stateString,
+            });
         Game.setState(stateString);
     }
 
