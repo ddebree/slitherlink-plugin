@@ -4,7 +4,7 @@ import { Solver } from "./Solver.class";
 function solve() {
     const gameBridge = new GameBridge();
     const puzzle = gameBridge.readPuzzleFromGame();
-    console.log("Puzzle", puzzle);
+    console.log("Input puzzle", puzzle);
     if (puzzle) {
         const solvedPuzzle = new Solver().solve(puzzle);
         gameBridge.writePuzzleToGame(solvedPuzzle);

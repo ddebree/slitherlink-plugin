@@ -1,15 +1,10 @@
-import {Puzzle} from "./Puzzle.class";
+import {LINK_STATE_X, Puzzle} from "./Puzzle.class";
+import {FillInLinks} from "./operations/FillInLinks.class";
 
 export class Solver {
 
     public solve(puzzle: Puzzle): Puzzle {
-        // for (var row = 0; row < puzzle.horizontalMap.length; row++) {
-        //     for (var col = 0; col < puzzle.horizontalMap[0].length; col++) {
-        //         puzzle.horizontalMap[row][col] = " ";
-        //     }
-        // }
-        return puzzle;
+        return new FillInLinks().applyToPuzzle(puzzle);
     }
-
 
 }

@@ -1,32 +1,28 @@
-import { Operation } from "./Operation.class";
+import {CellValueOperation, Operation} from "./Operation.class";
+import {LINK_STATE_SET, LINK_STATE_X, Puzzle} from "../Puzzle.class";
 
-export class FillInLinks extends Operation {
+/**
+ * This helper function handles the case where a cell has a number in it,
+ * call it cellnum, and the cell is surrounded by 4 - cellnum 'x' values.
+ * In this case, the remaining slots must be links.
+ *
+ */
+export class FillInLinks extends CellValueOperation {
 
+    public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number): Puzzle {
+        const cellValue = puzzle.cellMap[row][col];
+        const numLinks = puzzle.countAroundCell(row, col, LINK_STATE_SET);
+        const numXs = puzzle.countAroundCell(row, col, LINK_STATE_X)
 
-//     def fill_in_links(self):
-//         self.iter_cells(cellfunc_fill_in_links)
-//
-//
-//     def cellfunc_fill_in_links(puzzle, row, col):
-//         '''
-//     This helper function handles the case where a cell has a number in it,
-//     call it cellnum, and the cell is surrounded by 4 - cellnum 'x' values.
-//     In this case, the remaining slots must be links.
-//     '''
-//
-//     cellval = puzzle.get_board(row, col)
-//     if cellval != ' ':
-//         links_required = int(cellval)
-//
-//     num_links = puzzle.count_adjacent_links(row, col)
-//     num_xes = puzzle.count_adjacent_xes(row, col)
-//
-//     if num_links < links_required and (4 - num_xes) == links_required:
-// # Remaining empty slots are set to links!
-//     puzzle.cond_set_link_to(row - 1, col, '-')
-//     puzzle.cond_set_link_to(row + 1, col, '-')
-//     puzzle.cond_set_link_to(row, col - 1, '|')
-//     puzzle.cond_set_link_to(row, col + 1, '|')
+        console.log("Checking cell", row, col, cellValue, numLinks, numXs);
 
+        if (numLinks < cellValue && ((4 - numXs) == cellValue)) {
+            puzzle = puzzle.optionalSetVerticalLinkTo(row, col, LINK_STATE_SET);
+            puzzle = puzzle.optionalSetVerticalLinkTo(row, col + 1, LINK_STATE_SET);
+            puzzle = puzzle.optionalSetHorizontalLinkTo(row, col, LINK_STATE_SET);
+            puzzle = puzzle.optionalSetHorizontalLinkTo(row + 1, col, LINK_STATE_SET);
+        }
+        return puzzle;
+    }
 
 }
