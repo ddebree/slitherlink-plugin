@@ -1,11 +1,13 @@
 import { Puzzle } from "./Puzzle.class";
 import { FillInLinksStrategy } from "./strategies/FillInLinksStrategy.class";
 import { AbstractStrategy } from "./strategies/AbstractStrategy.class";
+import {FillInXsStrategy} from "./strategies/FillInXsStrategy.class";
 
 export class Solver {
 
     private strategies: AbstractStrategy[] = [
-        new FillInLinksStrategy()
+        new FillInLinksStrategy(),
+        new FillInXsStrategy(),
     ];
 
     public solve(inputPuzzle: Puzzle): Puzzle {
