@@ -1,11 +1,10 @@
-import {CellValueOperation, Operation} from "./Operation.class";
-import {LINK_STATE_SET, LINK_STATE_X, Puzzle} from "../Puzzle.class";
+import { CellValueOperation } from "./Operation.class";
+import { LINK_STATE_SET, LINK_STATE_X, Puzzle } from "../Puzzle.class";
 
 /**
- * This helper function handles the case where a cell has a number in it,
- * call it cellnum, and the cell is surrounded by 4 - cellnum 'x' values.
+ * This handles the case where a cell has a number in it, call it cellnum,
+ * and the cell is surrounded by 4 - cellnum 'x' values.
  * In this case, the remaining slots must be links.
- *
  */
 export class FillInLinks extends CellValueOperation {
 
@@ -13,8 +12,6 @@ export class FillInLinks extends CellValueOperation {
         const cellValue = puzzle.cellMap[row][col];
         const numLinks = puzzle.countAroundCell(row, col, LINK_STATE_SET);
         const numXs = puzzle.countAroundCell(row, col, LINK_STATE_X)
-
-        console.log("Checking cell", row, col, cellValue, numLinks, numXs);
 
         if (numLinks < cellValue && ((4 - numXs) == cellValue)) {
             puzzle = puzzle.optionalSetVerticalLinkTo(row, col, LINK_STATE_SET);
