@@ -8,8 +8,7 @@ import { AbstractCellWithValueStrategy } from "./AbstractStrategy.class";
  */
 export class FillInXsStrategy extends AbstractCellWithValueStrategy {
 
-    public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number): Puzzle {
-        const cellValue = puzzle.cellMap[row][col];
+    public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number, cellValue: number): Puzzle {
         const numLinks = puzzle.countAroundCell(row, col, LINK_STATE_SET);
         const numXs = puzzle.countAroundCell(row, col, LINK_STATE_X)
 

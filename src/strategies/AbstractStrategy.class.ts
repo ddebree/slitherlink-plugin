@@ -10,15 +10,16 @@ export class AbstractStrategy {
 
 export class AbstractCellWithValueStrategy extends AbstractStrategy {
 
-    public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number): Puzzle {
+    public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number, cellValue: number): Puzzle {
         return puzzle;
     }
 
     public applyToPuzzle(puzzle: Puzzle): Puzzle {
         for (var row = 0; row < puzzle.getHeight(); row++) {
             for (var col = 0; col < puzzle.getWidth(); col++) {
-                if (puzzle.cellMap[row][col] >= 0) {
-                    puzzle = this.applyToPuzzleForCell(puzzle, row, col);
+                const cellValue = puzzle.getCellValue(row, col);
+                if (cellValue >= 0) {
+                    puzzle = this.applyToPuzzleForCell(puzzle, row, col, cellValue);
                 }
             }
         }

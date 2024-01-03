@@ -16,6 +16,23 @@ export class Puzzle {
         return this.cellMap[0].length;
     }
 
+    public getCellValue(row: number, col: number) {
+        return this.cellMap[row][col];
+    }
+
+    public isValidCell(row: number, col: number) {
+        return row >= 0 && col >= 0
+            && row < this.getHeight() && col < this.getWidth();
+    }
+
+    public getCellValueWithZeroOutsideBoard(row: number, col: number) {
+        if (row >= 0 && row < this.getHeight() && col >= 0 && col < this.getWidth()) {
+            return this.cellMap[row][col];
+        } else {
+            return 0;
+        }
+    }
+
     public countAroundCell(row: number, col: number, toCount: string):number {
         return (this.verticalMap[row][col] === toCount ? 1 : 0) +
                     (this.verticalMap[row][col + 1] === toCount ? 1 : 0) +
@@ -24,6 +41,9 @@ export class Puzzle {
     }
 
     public optionalSetVerticalLinkTo(row: number, col: number, newValue: string) {
+        if (this.isOutside(this.verticalMap, row, col)) {
+            return this;
+        }
         if (this.verticalMap[row][col] === LINK_STATE_UNSET) {
             const verticalMapCopy = this.copyLinkMap(this.verticalMap);
             verticalMapCopy[row][col] = newValue;
@@ -34,6 +54,9 @@ export class Puzzle {
     }
 
     public optionalSetHorizontalLinkTo(row: number, col: number, newValue: string) {
+        if (this.isOutside(this.horizontalMap, row, col)) {
+            return this;
+        }
         if (this.horizontalMap[row][col] === LINK_STATE_UNSET) {
             const horizontalMapCopy = this.copyLinkMap(this.horizontalMap);
             horizontalMapCopy[row][col] = newValue;
@@ -53,4 +76,7 @@ export class Puzzle {
         return result;
     }
 
+    private isOutside(linkMap: string[][], row: number, col: number) {
+        return row < 0 || col < 0 || row >= linkMap.length || col >= linkMap[0].length;
+    }
 }
