@@ -40,6 +40,40 @@ export class Puzzle {
                     (this.horizontalMap[row + 1][col] === toCount ? 1 : 0);
     }
 
+    public countAroundDot(row: number, col: number, toCount: string):number {
+        //Note that row and col could be outside the bounds of the grid
+
+        // --- . ----- .
+        //     |       |
+        // --- O ----- .
+        //     | (r,c) |
+        // --- . ----- .
+
+        //Start by assuming we are outside the bounds of the grid:
+        var verticalAbove = LINK_STATE_X;
+        var verticalBelow = LINK_STATE_X;
+        var horizontalLeft = LINK_STATE_X;
+        var horizontalRight = LINK_STATE_X;
+
+        if (this.isInside(this.verticalMap, row - 1, col)) {
+            verticalAbove = this.verticalMap[row - 1][col];
+        }
+        if (this.isInside(this.verticalMap, row, col)) {
+            verticalBelow = this.verticalMap[row][col];
+        }
+        if (this.isInside(this.horizontalMap, row, col - 1)) {
+            horizontalLeft = this.horizontalMap[row][col - 1];
+        }
+        if (this.isInside(this.horizontalMap, row, col)) {
+            horizontalRight = this.horizontalMap[row][col];
+        }
+
+        return (verticalAbove === toCount ? 1 : 0) +
+            (verticalBelow === toCount ? 1 : 0) +
+            (horizontalLeft === toCount ? 1 : 0) +
+            (horizontalRight === toCount ? 1 : 0);
+    }
+
     public optionalSetVerticalLinkTo(row: number, col: number, newValue: string) {
         if (this.isOutside(this.verticalMap, row, col)) {
             return this;
@@ -74,6 +108,10 @@ export class Puzzle {
             }
         }
         return result;
+    }
+
+    private isInside(linkMap: string[][], row: number, col: number) {
+        return row >= 0 && col >= 0 && row < linkMap.length && col < linkMap[0].length;
     }
 
     private isOutside(linkMap: string[][], row: number, col: number) {
