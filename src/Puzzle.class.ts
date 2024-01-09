@@ -2,6 +2,11 @@ export const LINK_STATE_SET = "+";
 export const LINK_STATE_UNSET = " ";
 export const LINK_STATE_X = "x";
 
+export class Dot {
+    constructor(public row: number, public col: number) {
+    }
+}
+
 export class Puzzle {
     constructor(public cellMap: number[][],
                 public horizontalMap: string[][],
@@ -42,36 +47,94 @@ export class Puzzle {
 
     public countAroundDot(row: number, col: number, toCount: string):number {
         //Note that row and col could be outside the bounds of the grid
-
         // --- . ----- .
         //     |       |
         // --- O ----- .
         //     | (r,c) |
         // --- . ----- .
-
-        //Start by assuming we are outside the bounds of the grid:
-        var verticalAbove = LINK_STATE_X;
-        var verticalBelow = LINK_STATE_X;
-        var horizontalLeft = LINK_STATE_X;
-        var horizontalRight = LINK_STATE_X;
-
-        if (this.isInside(this.verticalMap, row - 1, col)) {
-            verticalAbove = this.verticalMap[row - 1][col];
-        }
-        if (this.isInside(this.verticalMap, row, col)) {
-            verticalBelow = this.verticalMap[row][col];
-        }
-        if (this.isInside(this.horizontalMap, row, col - 1)) {
-            horizontalLeft = this.horizontalMap[row][col - 1];
-        }
-        if (this.isInside(this.horizontalMap, row, col)) {
-            horizontalRight = this.horizontalMap[row][col];
-        }
+        const verticalAbove = this.getVerticalLinkState(row - 1, col);
+        const verticalBelow = this.getVerticalLinkState(row, col);
+        const horizontalLeft = this.getHorizontalLinkState(row, col - 1);
+        const horizontalRight = this.getHorizontalLinkState(row, col);
 
         return (verticalAbove === toCount ? 1 : 0) +
             (verticalBelow === toCount ? 1 : 0) +
             (horizontalLeft === toCount ? 1 : 0) +
             (horizontalRight === toCount ? 1 : 0);
+    }
+
+    public getVerticalLinkState(row: number, col: number) {
+        if (this.isInside(this.verticalMap, row, col)) {
+            return this.verticalMap[row][col];
+        } else {
+            return LINK_STATE_X
+        }
+    }
+
+    public getHorizontalLinkState(row: number, col: number) {
+        if (this.isInside(this.horizontalMap, row, col)) {
+            return this.horizontalMap[row][col];
+        } else {
+            return LINK_STATE_X
+        }
+    }
+
+    public getLinkedNeighbours(row: number, col: number): Dot[] {
+        //Note that row and col could be outside the bounds of the grid
+        // --- . ----- .
+        //     |       |
+        // --- O ----- .
+        //     | (r,c) |
+        // --- . ----- .
+        const verticalAbove = this.getVerticalLinkState(row - 1, col);
+        const verticalBelow = this.getVerticalLinkState(row, col);
+        const horizontalLeft = this.getHorizontalLinkState(row, col - 1);
+        const horizontalRight = this.getHorizontalLinkState(row, col);
+
+        const neighbours: Dot[] = [];
+        if (verticalAbove === LINK_STATE_SET) {
+            neighbours.push(new Dot(row - 1, col));
+        }
+        if (verticalBelow === LINK_STATE_SET) {
+            neighbours.push(new Dot(row + 1, col));
+        }
+        if (horizontalLeft === LINK_STATE_SET) {
+            neighbours.push(new Dot(row, col - 1));
+        }
+        if (horizontalRight === LINK_STATE_SET) {
+            neighbours.push(new Dot(row, col + 1));
+        }
+        return neighbours;
+    }
+
+    public getOtherEndOfPath(endpoint: Dot) {
+        var neighbours = this.getLinkedNeighbours(endpoint.row, endpoint.col);
+        if (neighbours.length != 1) {
+            //Something weird going on here...
+            return null;
+        }
+        var prevStep = endpoint;
+        var nextStep = neighbours[0];
+        while (true) {
+            neighbours = this.getLinkedNeighbours(nextStep.row, nextStep.col);
+            if (neighbours.length == 2) {
+                //Intermediate dot along the path
+                if (prevStep.row == neighbours[0].row && prevStep.col == neighbours[0].col) {
+                    //We already saw this neighbour[0].
+                    prevStep = nextStep;
+                    nextStep = neighbours[1];
+                } else {
+                    prevStep = nextStep;
+                    nextStep = neighbours[0];
+                }
+            } else if (neighbours.length == 1) {
+                //We found the other end:
+                return nextStep;
+            } else {
+                //We found a dot with non-2 number of links (weird):
+                return null;
+            }
+        }
     }
 
     public optionalSetVerticalLinkTo(row: number, col: number, newValue: string) {
