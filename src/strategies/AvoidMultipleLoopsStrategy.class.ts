@@ -1,6 +1,11 @@
 import { Dot, LINK_STATE_SET, LINK_STATE_X, Puzzle } from "../Puzzle.class";
 import { AbstractStrategy } from "./AbstractStrategy.class";
 
+
+/**
+ * This strategy places 'x' values between dots that are joined by the same path,
+ * to prevent multiple closed loops from being created.
+ */
 export class AvoidMultipleLoopsStrategy extends AbstractStrategy {
 
     public applyToPuzzle(puzzle: Puzzle): Puzzle {
@@ -12,7 +17,7 @@ export class AvoidMultipleLoopsStrategy extends AbstractStrategy {
                 }
             }
         }
-        //If there is less than 2 endpoints, we are likely in the end stages of the game:
+        //If there is less than 2 endpoints, it means there is only one path
         if (endpoints.size <= 2) {
             return puzzle;
         }
