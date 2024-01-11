@@ -5,7 +5,7 @@ import { FillInXsStrategy } from "./strategies/FillInXsStrategy.class";
 import { AdjacentThreesStrategy } from "./strategies/AdjacentThreesStrategy.class";
 import { FillInXsLinks } from "./strategies/FillInXsLinks.class";
 import { AvoidMultipleLoopsStrategy } from "./strategies/AvoidMultipleLoopsStrategy.class";
-import { LinkedThreesStrategy } from "./strategies/LinkedThreesStrategy.class";
+import { ThreeCellStrategy } from "./strategies/ThreeCellStrategy.class";
 
 export class Solver {
 
@@ -15,7 +15,7 @@ export class Solver {
         new AdjacentThreesStrategy(),
         new FillInXsLinks(),
         new AvoidMultipleLoopsStrategy(),
-        new LinkedThreesStrategy(),
+        new ThreeCellStrategy(),
     ];
 
     public solve(inputPuzzle: Puzzle): Puzzle {

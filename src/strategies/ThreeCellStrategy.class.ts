@@ -6,7 +6,7 @@ import { AbstractCellWithValueStrategy } from "./AbstractStrategy.class";
  * surrounding one corner, and the case where a '3' cell has a link
  * coming into one corner of the cell.
  */
-export class LinkedThreesStrategy extends AbstractCellWithValueStrategy {
+export class ThreeCellStrategy extends AbstractCellWithValueStrategy {
 
     public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number, cellValue: number): Puzzle {
         if (cellValue != 3) {
