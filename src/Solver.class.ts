@@ -5,6 +5,7 @@ import { FillInXsStrategy } from "./strategies/FillInXsStrategy.class";
 import { AdjacentThreesStrategy } from "./strategies/AdjacentThreesStrategy.class";
 import { FillInXsLinks } from "./strategies/FillInXsLinks.class";
 import { AvoidMultipleLoopsStrategy } from "./strategies/AvoidMultipleLoopsStrategy.class";
+import { LinkedThreesStrategy } from "./strategies/LinkedThreesStrategy.class";
 
 export class Solver {
 
@@ -13,13 +14,22 @@ export class Solver {
         new FillInXsStrategy(),
         new AdjacentThreesStrategy(),
         new FillInXsLinks(),
-        new AvoidMultipleLoopsStrategy()
+        new AvoidMultipleLoopsStrategy(),
+        new LinkedThreesStrategy(),
     ];
 
     public solve(inputPuzzle: Puzzle): Puzzle {
         var puzzle = inputPuzzle;
-        for (const strategy of this.strategies) {
-            puzzle = strategy.applyToPuzzle(puzzle);
+        for (let i = 0; i < 20; i++) {
+            console.log("Starting Solving Iteration " + i);
+            const puzzleAtStart = puzzle;
+            for (const strategy of this.strategies) {
+                puzzle = strategy.applyToPuzzle(puzzle);
+            }
+            if (puzzleAtStart === puzzle) {
+                console.log("No more changes being made. Just returning what we have");
+                return puzzle;
+            }
         }
         return puzzle;
     }
