@@ -7,6 +7,12 @@ export class Dot {
     }
 }
 
+export interface LinkLocation {
+    row: number,
+    col: number,
+    IsVertical: boolean
+}
+
 export class Puzzle {
     constructor(public cellMap: number[][],
                 public horizontalMap: string[][],
@@ -160,6 +166,14 @@ export class Puzzle {
             return new Puzzle(this.cellMap, horizontalMapCopy, this.verticalMap);
         } else {
             return this;
+        }
+    }
+
+    public optionalSetLinkTo(location: LinkLocation, newValue: string) {
+        if (location.IsVertical) {
+            return this.optionalSetVerticalLinkTo(location.row, location.col, newValue);
+        } else {
+            return this.optionalSetHorizontalLinkTo(location.row, location.col, newValue);
         }
     }
 

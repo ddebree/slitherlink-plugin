@@ -6,6 +6,7 @@ import { AdjacentThreesStrategy } from "./strategies/AdjacentThreesStrategy.clas
 import { FillInXsLinks } from "./strategies/FillInXsLinks.class";
 import { AvoidMultipleLoopsStrategy } from "./strategies/AvoidMultipleLoopsStrategy.class";
 import { ThreeCellStrategy } from "./strategies/ThreeCellStrategy.class";
+import {OneCellStrategy} from "./strategies/OneCellStrategy.class";
 
 export class Solver {
 
@@ -16,11 +17,12 @@ export class Solver {
         new FillInXsLinks(),
         new AvoidMultipleLoopsStrategy(),
         new ThreeCellStrategy(),
+        new OneCellStrategy(),
     ];
 
     public solve(inputPuzzle: Puzzle): Puzzle {
         var puzzle = inputPuzzle;
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 1; i++) {
             console.log("Starting Solving Iteration " + i);
             const puzzleAtStart = puzzle;
             for (const strategy of this.strategies) {
