@@ -1,4 +1,4 @@
-import {LINK_STATE_SET, LINK_STATE_X, LinkLocation, Puzzle} from "../Puzzle.class";
+import {LINK_STATE_SET, LINK_STATE_UNSET, LINK_STATE_X, LinkLocation, Puzzle} from "../Puzzle.class";
 import { AbstractCellWithValueStrategy } from "./AbstractStrategy.class";
 
 /**
@@ -61,19 +61,31 @@ export class OneCellStrategy extends AbstractCellWithValueStrategy {
         }
 
         //A corner point surrounded by xs:
-        if (l1 === LINK_STATE_X && l5 === LINK_STATE_X) {
+        if (l1 === LINK_STATE_X
+            && l5 === LINK_STATE_X
+            && puzzle.getLinkState(linkA) === LINK_STATE_UNSET
+            && puzzle.getLinkState(linkB) == LINK_STATE_UNSET) {
             puzzle = puzzle.optionalSetLinkTo(linkA, LINK_STATE_X);
             puzzle = puzzle.optionalSetLinkTo(linkB, LINK_STATE_X);
         }
-        if (l2 === LINK_STATE_X && l7 === LINK_STATE_X) {
+        if (l2 === LINK_STATE_X
+            && l7 === LINK_STATE_X
+            && puzzle.getLinkState(linkA) === LINK_STATE_UNSET
+            && puzzle.getLinkState(linkD) == LINK_STATE_UNSET) {
             puzzle = puzzle.optionalSetLinkTo(linkA, LINK_STATE_X);
             puzzle = puzzle.optionalSetLinkTo(linkD, LINK_STATE_X);
         }
-        if (l3 === LINK_STATE_X && l6 === LINK_STATE_X){
+        if (l3 === LINK_STATE_X
+            && l6 === LINK_STATE_X
+            && puzzle.getLinkState(linkB) === LINK_STATE_UNSET
+            && puzzle.getLinkState(linkC) == LINK_STATE_UNSET){
             puzzle = puzzle.optionalSetLinkTo(linkB, LINK_STATE_X);
             puzzle = puzzle.optionalSetLinkTo(linkC, LINK_STATE_X);
         }
-        if (l4 === LINK_STATE_X && l8 === LINK_STATE_X){
+        if (l4 === LINK_STATE_X
+            && l8 === LINK_STATE_X
+            && puzzle.getLinkState(linkC) === LINK_STATE_UNSET
+            && puzzle.getLinkState(linkD) == LINK_STATE_UNSET){
             puzzle = puzzle.optionalSetLinkTo(linkC, LINK_STATE_X);
             puzzle = puzzle.optionalSetLinkTo(linkD, LINK_STATE_X);
         }

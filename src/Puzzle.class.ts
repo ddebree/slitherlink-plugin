@@ -36,14 +36,6 @@ export class Puzzle {
             && row < this.getHeight() && col < this.getWidth();
     }
 
-    public getCellValueWithZeroOutsideBoard(row: number, col: number) {
-        if (row >= 0 && row < this.getHeight() && col >= 0 && col < this.getWidth()) {
-            return this.cellMap[row][col];
-        } else {
-            return 0;
-        }
-    }
-
     public countAroundCell(row: number, col: number, toCount: string):number {
         return (this.verticalMap[row][col] === toCount ? 1 : 0) +
                     (this.verticalMap[row][col + 1] === toCount ? 1 : 0) +
@@ -82,6 +74,14 @@ export class Puzzle {
             return this.horizontalMap[row][col];
         } else {
             return LINK_STATE_X
+        }
+    }
+
+    public getLinkState(linkLocation: LinkLocation) {
+        if (linkLocation.IsVertical) {
+            return this.getVerticalLinkState(linkLocation.row, linkLocation.col);
+        } else {
+            return this.getHorizontalLinkState(linkLocation.row, linkLocation.col);
         }
     }
 
