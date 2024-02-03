@@ -31,9 +31,12 @@ export class Puzzle {
         return this.cellMap[row][col];
     }
 
-    public isValidCell(row: number, col: number) {
-        return row >= 0 && col >= 0
-            && row < this.getHeight() && col < this.getWidth();
+    public getValidCellValue(row: number, col: number) {
+        if (row >= 0 && col >= 0 && row < this.getHeight() && col < this.getWidth()) {
+            return this.cellMap[row][col];
+        } else {
+            return -1;
+        }
     }
 
     public countAroundCell(row: number, col: number, toCount: string):number {

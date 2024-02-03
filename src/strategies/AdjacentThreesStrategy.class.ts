@@ -15,7 +15,7 @@ export class AdjacentThreesStrategy extends AbstractCellWithValueStrategy {
         }
 
         //Horizontal case: The cell to the right of the current cell is also a three
-        if (puzzle.isValidCell(row, col + 1) && puzzle.getCellValue(row, col + 1) == 3) {
+        if (puzzle.getValidCellValue(row, col + 1) == 3) {
 
             // .   .   .
             //     X
@@ -34,7 +34,7 @@ export class AdjacentThreesStrategy extends AbstractCellWithValueStrategy {
         }
 
         //Vertical case: The cell below the current cell is also a three
-        if (puzzle.isValidCell(row + 1, col) && puzzle.getCellValue(row + 1, col) == 3) {
+        if (puzzle.getValidCellValue(row + 1, col) == 3) {
 
             // .   .---.   .
             // .    *3*
@@ -51,7 +51,7 @@ export class AdjacentThreesStrategy extends AbstractCellWithValueStrategy {
         }
 
         //Diagonal downward case: The cell below and to the right of this is also 3
-        if (puzzle.isValidCell(row + 1, col + 1) && puzzle.getCellValue(row + 1, col + 1) == 3) {
+        if (puzzle.getValidCellValue(row + 1, col + 1) == 3) {
 
             // .---.   .
             // |*3*
@@ -67,7 +67,7 @@ export class AdjacentThreesStrategy extends AbstractCellWithValueStrategy {
         }
 
         //Diagonal upward case: The cell above and to the right of this is also 3
-        if (puzzle.isValidCell(row - 1, col + 1) && puzzle.getCellValue(row - 1, col + 1) == 3) {
+        if (puzzle.getValidCellValue(row - 1, col + 1) == 3) {
 
             // .   .---.
             //       3 |
