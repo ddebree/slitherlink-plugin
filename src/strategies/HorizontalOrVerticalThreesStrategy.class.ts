@@ -7,7 +7,7 @@ import {AbstractCellWithValueStrategy, AbstractStrategy} from "./AbstractStrateg
  * In these cases we can fill in some of the slots with links and/or 'x'
  * values, although we can't fully assign links.
  */
-export class AdjacentThreesStrategy extends AbstractCellWithValueStrategy {
+export class HorizontalOrVerticalThreesStrategy extends AbstractCellWithValueStrategy {
 
     public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number, cellValue: number): Puzzle {
         if (cellValue != 3) {
@@ -48,38 +48,6 @@ export class AdjacentThreesStrategy extends AbstractCellWithValueStrategy {
 
             puzzle = puzzle.optionalSetHorizontalLinkTo(row + 1, col - 1, LINK_STATE_X);
             puzzle = puzzle.optionalSetHorizontalLinkTo(row + 1, col + 1, LINK_STATE_X);
-        }
-
-        //Diagonal downward case: The cell below and to the right of this is also 3
-        if (puzzle.getValidCellValue(row + 1, col + 1) == 3) {
-
-            // .---.   .
-            // |*3*
-            // .   .   .
-            //       3 |
-            // .   .---.
-
-            puzzle = puzzle.optionalSetHorizontalLinkTo(row, col, LINK_STATE_SET);
-            puzzle = puzzle.optionalSetVerticalLinkTo(row, col, LINK_STATE_SET);
-
-            puzzle = puzzle.optionalSetHorizontalLinkTo(row + 2, col + 1, LINK_STATE_SET);
-            puzzle = puzzle.optionalSetVerticalLinkTo(row + 1, col + 2, LINK_STATE_SET);
-        }
-
-        //Diagonal upward case: The cell above and to the right of this is also 3
-        if (puzzle.getValidCellValue(row - 1, col + 1) == 3) {
-
-            // .   .---.
-            //       3 |
-            // .   .   .
-            // |*3*
-            // .--- .   .
-
-            puzzle = puzzle.optionalSetHorizontalLinkTo(row + 1, col, LINK_STATE_SET);
-            puzzle = puzzle.optionalSetVerticalLinkTo(row, col, LINK_STATE_SET);
-
-            puzzle = puzzle.optionalSetHorizontalLinkTo(row - 1, col + 1, LINK_STATE_SET);
-            puzzle = puzzle.optionalSetVerticalLinkTo(row - 1, col + 2, LINK_STATE_SET);
         }
 
         return puzzle;
