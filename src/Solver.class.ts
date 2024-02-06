@@ -8,6 +8,7 @@ import { AvoidMultipleLoopsStrategy } from "./strategies/AvoidMultipleLoopsStrat
 import { ThreeCellStrategy } from "./strategies/ThreeCellStrategy.class";
 import { OneCellStrategy } from "./strategies/OneCellStrategy.class";
 import { DiagonalOnesStrategy } from "./strategies/DiagonalOnesStrategy.class";
+import { TwoCellStrategy } from "./strategies/TwoCellStrategy.class";
 
 export class Solver {
 
@@ -17,8 +18,9 @@ export class Solver {
         new AdjacentThreesStrategy(),
         new FillInXsLinks(),
         new AvoidMultipleLoopsStrategy(),
-        new ThreeCellStrategy(),
         new OneCellStrategy(),
+        new TwoCellStrategy(),
+        new ThreeCellStrategy(),
         new DiagonalOnesStrategy(),
     ];
 
