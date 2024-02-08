@@ -7,9 +7,9 @@ import { FillInLinksStrategy } from "./strategies/FillInLinksStrategy.class";
 import { FillInXsLinks } from "./strategies/FillInXsLinks.class";
 import { FillInXsStrategy } from "./strategies/FillInXsStrategy.class";
 import { HorizontalOrVerticalThreesStrategy } from "./strategies/HorizontalOrVerticalThreesStrategy.class";
-import { OneCellStrategy } from "./strategies/OneCellStrategy.class";
-import { ThreeCellStrategy } from "./strategies/ThreeCellStrategy.class";
-import { TwoCellStrategy } from "./strategies/TwoCellStrategy.class";
+import { Cell1Strategy } from "./strategies/Cell1Strategy.class";
+import { Cell2Strategy } from "./strategies/Cell2Strategy.class";
+import { Cell3Strategy } from "./strategies/Cell3Strategy.class";
 
 export class Solver {
 
@@ -21,9 +21,9 @@ export class Solver {
         new FillInXsLinks(),
         new FillInXsStrategy(),
         new HorizontalOrVerticalThreesStrategy(),
-        new OneCellStrategy(),
-        new ThreeCellStrategy(),
-        new TwoCellStrategy(),
+        new Cell1Strategy(),
+        new Cell2Strategy(),
+        new Cell3Strategy(),
     ];
 
     public solve(inputPuzzle: Puzzle): Puzzle {

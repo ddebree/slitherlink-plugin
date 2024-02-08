@@ -6,7 +6,7 @@ import { AbstractCellWithValueStrategy } from "./AbstractStrategy.class";
  *  - where a link coming into one of the corners and xs blocks the direction the path could take
  *  - where a corner is surrounded by two xs
  */
-export class OneCellStrategy extends AbstractCellWithValueStrategy {
+export class Cell1Strategy extends AbstractCellWithValueStrategy {
 
     public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number, cellValue: number): Puzzle {
         if (cellValue != 1) {

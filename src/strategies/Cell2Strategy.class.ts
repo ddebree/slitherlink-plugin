@@ -5,7 +5,7 @@ import { AbstractCellWithValueStrategy } from "./AbstractStrategy.class";
  * This strategy handles the case of a cell with a 2 in it:
  *  - where a link coming into one of the corners and xs blocks the direction the path could take
  */
-export class TwoCellStrategy extends AbstractCellWithValueStrategy {
+export class Cell2Strategy extends AbstractCellWithValueStrategy {
 
     public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number, cellValue: number): Puzzle {
         if (cellValue != 2) {

@@ -6,10 +6,13 @@ import { AbstractCellWithValueStrategy } from "./AbstractStrategy.class";
  * surrounding one corner, and the case where a '3' cell has a link
  * coming into one corner of the cell.
  */
-export class ThreeCellStrategy extends AbstractCellWithValueStrategy {
+export class Cell3Strategy extends AbstractCellWithValueStrategy {
 
     public applyToPuzzleForCell(puzzle: Puzzle, row: number, col: number, cellValue: number): Puzzle {
         if (cellValue != 3) {
+            return puzzle;
+        }
+        if (puzzle.countAroundCell(row, col, LINK_STATE_SET) === 3) {
             return puzzle;
         }
         // Key to the links around this 1 cell:
