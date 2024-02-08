@@ -15,9 +15,9 @@ export class AbstractCellWithValueStrategy extends AbstractStrategy {
     }
 
     public applyToPuzzle(puzzle: Puzzle): Puzzle {
-        for (var row = 0; row < puzzle.getHeight(); row++) {
-            for (var col = 0; col < puzzle.getWidth(); col++) {
-                const cellValue = puzzle.getCellValue(row, col);
+        for (var row = 0; row < puzzle.getPuzzleContext().getHeight(); row++) {
+            for (var col = 0; col < puzzle.getPuzzleContext().getWidth(); col++) {
+                const cellValue = puzzle.getPuzzleContext().getCellValue(row, col);
                 if (cellValue >= 0) {
                     puzzle = this.applyToPuzzleForCell(puzzle, row, col, cellValue);
                 }
@@ -35,8 +35,8 @@ export class AbstractDotStrategy extends AbstractStrategy {
     }
 
     public applyToPuzzle(puzzle: Puzzle): Puzzle {
-        for (var row = 0; row < puzzle.getHeight() + 1; row++) {
-            for (var col = 0; col < puzzle.getWidth() + 1; col++) {
+        for (var row = 0; row < puzzle.getPuzzleContext().getHeight() + 1; row++) {
+            for (var col = 0; col < puzzle.getPuzzleContext().getWidth() + 1; col++) {
                 puzzle = this.applyToPuzzleForDot(puzzle, row, col);
             }
         }

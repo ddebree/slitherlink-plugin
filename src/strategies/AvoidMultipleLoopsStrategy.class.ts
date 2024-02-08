@@ -10,8 +10,8 @@ export class AvoidMultipleLoopsStrategy extends AbstractStrategy {
 
     public applyToPuzzle(puzzle: Puzzle): Puzzle {
         const endpoints = new Set<Dot>();
-        for (var row = 0; row < puzzle.getHeight() + 1; row++) {
-            for (var col = 0; col < puzzle.getWidth() + 1; col++) {
+        for (var row = 0; row < puzzle.getPuzzleContext().getHeight() + 1; row++) {
+            for (var col = 0; col < puzzle.getPuzzleContext().getWidth() + 1; col++) {
                 if (puzzle.countAroundDot(row, col, LINK_STATE_SET) == 1) {
                     endpoints.add(new Dot(row, col));
                 }

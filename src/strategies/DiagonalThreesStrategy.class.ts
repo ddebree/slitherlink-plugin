@@ -24,9 +24,9 @@ export class DiagonalThreesStrategy extends AbstractCellWithValueStrategy {
     //       3 |
     // .   .---.
     private checkNextCellDownward(puzzle: Puzzle, origRow: number, origCol: number, nextRow: number, nextCol: number): Puzzle {
-        if (puzzle.getValidCellValue(nextRow, nextCol) == 2) {
+        if (puzzle.getPuzzleContext().getValidCellValue(nextRow, nextCol) == 2) {
             return this.checkNextCellDownward(puzzle, origRow, origCol, nextRow + 1, nextCol + 1);
-        } else if (puzzle.getValidCellValue(nextRow, nextCol) == 3) {
+        } else if (puzzle.getPuzzleContext().getValidCellValue(nextRow, nextCol) == 3) {
             puzzle = puzzle.optionalSetHorizontalLinkTo(origRow, origCol, LINK_STATE_SET);
             puzzle = puzzle.optionalSetVerticalLinkTo(origRow, origCol, LINK_STATE_SET);
 
@@ -42,9 +42,9 @@ export class DiagonalThreesStrategy extends AbstractCellWithValueStrategy {
     // |*3*
     // .--- .   .
     private checkNextCellUpward(puzzle: Puzzle, origRow: number, origCol: number, nextRow: number, nextCol: number): Puzzle {
-        if (puzzle.getValidCellValue(nextRow, nextCol) == 2) {
+        if (puzzle.getPuzzleContext().getValidCellValue(nextRow, nextCol) == 2) {
             return this.checkNextCellUpward(puzzle, origRow, origCol, nextRow - 1, nextCol + 1);
-        } else if (puzzle.getValidCellValue(nextRow, nextCol) == 3) {
+        } else if (puzzle.getPuzzleContext().getValidCellValue(nextRow, nextCol) == 3) {
             puzzle = puzzle.optionalSetHorizontalLinkTo(origRow + 1, origCol, LINK_STATE_SET);
             puzzle = puzzle.optionalSetVerticalLinkTo(origRow, origCol, LINK_STATE_SET);
 

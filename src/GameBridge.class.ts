@@ -1,4 +1,4 @@
-import {LINK_STATE_SET, LINK_STATE_UNSET, LINK_STATE_X, Puzzle} from "./Puzzle.class";
+import { LINK_STATE_SET, LINK_STATE_UNSET, LINK_STATE_X, Puzzle, PuzzleContext } from "./Puzzle.class";
 
 //The data objects that are used internally by the game engine
 declare class Status {
@@ -50,7 +50,7 @@ export class GameBridge {
                 verticalMap[row][col] = this.convertLnkStateFromGame(linkValue);
             }
         }
-        return new Puzzle(cellMap, horizontalMap, verticalMap);
+        return Puzzle.createStartPuzzle(new PuzzleContext(cellMap), horizontalMap, verticalMap);
     }
 
     private convertLnkStateFromGame(linkValue: number) {
@@ -66,14 +66,14 @@ export class GameBridge {
     public writePuzzleToGame(puzzle: Puzzle) {
         var stateString = "";
 
-        for (var row = 0; row < puzzle.getHeight() + 1; row++) {
-            for (var col = 0; col < puzzle.getWidth(); col++) {
-                stateString += this.convertLinkStateToGame(puzzle.horizontalMap[row][col]);
+        for (var row = 0; row < puzzle.getPuzzleContext().getHeight() + 1; row++) {
+            for (var col = 0; col < puzzle.getPuzzleContext().getWidth(); col++) {
+                stateString += this.convertLinkStateToGame(puzzle.getHorizontalLinkState(row, col));
             }
         }
-        for (var row = 0; row < puzzle.getHeight(); row++) {
-            for (var col = 0; col < puzzle.getWidth() + 1; col++) {
-                stateString += this.convertLinkStateToGame(puzzle.verticalMap[row][col]);
+        for (var row = 0; row < puzzle.getPuzzleContext().getHeight(); row++) {
+            for (var col = 0; col < puzzle.getPuzzleContext().getWidth() + 1; col++) {
+                stateString += this.convertLinkStateToGame(puzzle.getVerticalLinkState(row, col));
             }
         }
         stateString += "|";

@@ -11,7 +11,7 @@ export class DiagonalOnesStrategy extends AbstractCellWithValueStrategy {
             return puzzle;
         }
         //Diagonal downward case: The cell below and to the right of this is also 1
-        if (puzzle.getValidCellValue(row + 1, col + 1) == 1) {
+        if (puzzle.getPuzzleContext().getValidCellValue(row + 1, col + 1) == 1) {
             //Outer Xs
             // . X .   .
             // X*1*
@@ -37,7 +37,7 @@ export class DiagonalOnesStrategy extends AbstractCellWithValueStrategy {
         }
 
         //Diagonal upward case: The cell above and to the right of this is also 1
-        if (puzzle.getValidCellValue(row - 1, col + 1) == 1) {
+        if (puzzle.getPuzzleContext().getValidCellValue(row - 1, col + 1) == 1) {
             //Outer Xs
             // .   . x .
             //       1 x

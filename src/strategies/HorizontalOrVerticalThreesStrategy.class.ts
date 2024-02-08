@@ -15,7 +15,7 @@ export class HorizontalOrVerticalThreesStrategy extends AbstractCellWithValueStr
         }
 
         //Horizontal case: The cell to the right of the current cell is also a three
-        if (puzzle.getValidCellValue(row, col + 1) == 3) {
+        if (puzzle.getPuzzleContext().getValidCellValue(row, col + 1) == 3) {
 
             // .   .   .
             //     X
@@ -34,7 +34,7 @@ export class HorizontalOrVerticalThreesStrategy extends AbstractCellWithValueStr
         }
 
         //Vertical case: The cell below the current cell is also a three
-        if (puzzle.getValidCellValue(row + 1, col) == 3) {
+        if (puzzle.getPuzzleContext().getValidCellValue(row + 1, col) == 3) {
 
             // .   .---.   .
             // .    *3*

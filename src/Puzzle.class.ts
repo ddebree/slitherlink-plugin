@@ -13,10 +13,8 @@ export interface LinkLocation {
     IsVertical: boolean
 }
 
-export class Puzzle {
-    constructor(public cellMap: number[][],
-                public horizontalMap: string[][],
-                public verticalMap: string[][]) {
+export class PuzzleContext {
+    constructor(public cellMap: number[][]) {
     }
 
     public getHeight(): number {
@@ -37,6 +35,30 @@ export class Puzzle {
         } else {
             return -1;
         }
+    }
+
+}
+
+export class Puzzle {
+
+    private constructor(private puzzleContext: PuzzleContext,
+                private horizontalMap: string[][],
+                private verticalMap: string[][]) {
+    }
+
+    public static createStartPuzzle(puzzleContext: PuzzleContext,
+                                    horizontalMap: string[][],
+                                    verticalMap: string[][]): Puzzle {
+        return new Puzzle(puzzleContext, horizontalMap, verticalMap);
+    }
+
+    private createChildPuzzle(newHorizontalMap: string[][],
+                              newVerticalMap: string[][]) {
+        return new Puzzle(this.puzzleContext, newHorizontalMap, newVerticalMap);
+    }
+
+    public getPuzzleContext() {
+        return this.puzzleContext;
     }
 
     public countAroundCell(row: number, col: number, toCount: string):number {
@@ -153,7 +175,7 @@ export class Puzzle {
         if (this.verticalMap[row][col] === LINK_STATE_UNSET) {
             const verticalMapCopy = this.copyLinkMap(this.verticalMap);
             verticalMapCopy[row][col] = newValue;
-            return new Puzzle(this.cellMap, this.horizontalMap, verticalMapCopy);
+            return this.createChildPuzzle(this.horizontalMap, verticalMapCopy);
         } else {
             return this;
         }
@@ -166,7 +188,7 @@ export class Puzzle {
         if (this.horizontalMap[row][col] === LINK_STATE_UNSET) {
             const horizontalMapCopy = this.copyLinkMap(this.horizontalMap);
             horizontalMapCopy[row][col] = newValue;
-            return new Puzzle(this.cellMap, horizontalMapCopy, this.verticalMap);
+            return this.createChildPuzzle(horizontalMapCopy, this.verticalMap);
         } else {
             return this;
         }
