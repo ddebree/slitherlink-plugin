@@ -27,20 +27,3 @@ export class AbstractCellWithValueStrategy extends AbstractStrategy {
     }
 
 }
-
-export class AbstractDotStrategy extends AbstractStrategy {
-
-    public applyToPuzzleForDot(puzzle: Puzzle, row: number, col: number): Puzzle {
-        return puzzle;
-    }
-
-    public applyToPuzzle(puzzle: Puzzle): Puzzle {
-        for (var row = 0; row < puzzle.getPuzzleContext().getHeight() + 1; row++) {
-            for (var col = 0; col < puzzle.getPuzzleContext().getWidth() + 1; col++) {
-                puzzle = this.applyToPuzzleForDot(puzzle, row, col);
-            }
-        }
-        return puzzle;
-    }
-
-}
