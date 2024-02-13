@@ -42,11 +42,10 @@ export class Cell2Strategy extends AbstractCellWithValueStrategy {
         puzzle = this.solveForCorner(puzzle, l3, l6, l4, l8, l1, l5);
         puzzle = this.solveForCorner(puzzle, l4, l8, l2, l7, l3, l6);
 
-        //      l5  l6
-        //  l1  . b . l3
-        //      a 2 c
-        //  l2  . d . l4
-        //      l7  l8
+        puzzle = this.solveForCorner2(puzzle, l1, l5, l4, l8, linkA, linkB);
+        puzzle = this.solveForCorner2(puzzle, l2, l7, l3, l6, linkA, linkD);
+        puzzle = this.solveForCorner2(puzzle, l3, l6, l2, l7, linkB, linkC);
+        puzzle = this.solveForCorner2(puzzle, l4, l8, l1, l5, linkC, linkD);
 
         if (puzzle.countAroundCell(row, col, LINK_STATE_X) === 1
             && puzzle.countAroundCell(row, col, LINK_STATE_SET) === 0) {
@@ -59,16 +58,18 @@ export class Cell2Strategy extends AbstractCellWithValueStrategy {
         return puzzle;
     }
 
-    // If there is Xs around a corner, we know there is only two possible paths around this cell
-    // Both paths start and end at the same place
-    // If these start and end points only have one possible option then set it
-    // Example:
-    //  Input:                 Result:
-    //      X                     X
-    //    X .   .               X .   .
-    //        2                     2
-    //    X .   .               X .   .
-    //                            |
+    /**
+    * If there is Xs around a corner, we know there is only two possible paths around this cell
+    * Both paths start and end at the same place
+    * If these start and end points only have one possible option then set it
+    * Example:
+    *  Input:                 Result:
+    *      X                     X
+    *    X .   .               X .   .
+    *        2                     2
+    *    X .   .               X .   .
+    *                            |
+    */
     private solveForCorner(puzzle: Puzzle,
                            cnr1: LinkLocation, cnr2: LinkLocation,
                            plus90Cnr1: LinkLocation, plus90Cnr2: LinkLocation,
@@ -90,14 +91,43 @@ export class Cell2Strategy extends AbstractCellWithValueStrategy {
         return puzzle;
     }
 
-    // If the cell only has one X, and there is a link entering the corner of the cell,
-    // We can infer the state of one link:
-    // Example:
-    //  Input:                 Result:
-    //      .   .                 .---.
-    //        2 X                   2 X
-    //   ---.   .              ---.   .
-    //                            X
+    /**
+     * If there is Xs around a corner, we know there is only two possible paths around this cell
+     * If a link enters the dot opposite the closed corner, then we know the path must be the one
+     * around the closed corner
+     * Example:
+     *  Input:                 Result:
+     *      X                     X
+     *    X .   .               X .---.
+     *        2                   | 2
+     *      .   .                 .   .
+     *          |                     |
+     */
+    private solveForCorner2(puzzle: Puzzle,
+                           cnr1: LinkLocation, cnr2: LinkLocation,
+                           oppositeCnr1: LinkLocation, oppositeCnr2: LinkLocation,
+                           linkCnr1: LinkLocation, linkCnr2: LinkLocation) {
+        if (puzzle.getLinkState(cnr1) === LINK_STATE_X
+            && puzzle.getLinkState(cnr2) === LINK_STATE_X) {
+            if (puzzle.getLinkState(oppositeCnr1) === LINK_STATE_SET
+                || puzzle.getLinkState(oppositeCnr2) === LINK_STATE_SET) {
+                puzzle = puzzle.optionalSetLinkTo(linkCnr1, LINK_STATE_SET);
+                puzzle = puzzle.optionalSetLinkTo(linkCnr2, LINK_STATE_SET);
+            }
+        }
+        return puzzle;
+    }
+
+    /**
+    * If the cell only has one X, and there is a link entering the corner of the cell,
+    * We can infer the state of one link:
+    * Example:
+    *  Input:                 Result:
+    *      .   .                 .---.
+    *        2 X                   2 X
+    *   ---.   .              ---.   .
+    *                            X
+    */
     private solveForSingleX(puzzle: Puzzle,
                             oppositeSideLink: LinkLocation,
                             cnr1a: LinkLocation, cnr1b: LinkLocation, cellLink1: LinkLocation,
