@@ -43,22 +43,27 @@ export class Puzzle {
 
     private constructor(private puzzleContext: PuzzleContext,
                 private horizontalMap: string[][],
-                private verticalMap: string[][]) {
+                private verticalMap: string[][],
+                private depth: number) {
     }
 
     public static createStartPuzzle(puzzleContext: PuzzleContext,
                                     horizontalMap: string[][],
                                     verticalMap: string[][]): Puzzle {
-        return new Puzzle(puzzleContext, horizontalMap, verticalMap);
+        return new Puzzle(puzzleContext, horizontalMap, verticalMap, 0);
     }
 
     private createChildPuzzle(newHorizontalMap: string[][],
                               newVerticalMap: string[][]) {
-        return new Puzzle(this.puzzleContext, newHorizontalMap, newVerticalMap);
+        return new Puzzle(this.puzzleContext, newHorizontalMap, newVerticalMap, this.depth + 1);
     }
 
     public getPuzzleContext() {
         return this.puzzleContext;
+    }
+
+    public getDepth(): number {
+        return this.depth;
     }
 
     public countAroundCell(row: number, col: number, toCount: string):number {

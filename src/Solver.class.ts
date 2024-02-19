@@ -26,20 +26,22 @@ export class Solver {
         new Cell3Strategy(),
     ];
 
-    public solve(inputPuzzle: Puzzle): Puzzle {
+    public solve(inputPuzzle: Puzzle, toDepth: number): Puzzle {
         var puzzle = inputPuzzle;
-        for (let i = 0; i < 10; i++) {
-            console.log("Starting Solving Iteration " + i);
+        while (true) {
+            console.log("Starting Solving Iteration");
             const puzzleAtStart = puzzle;
             for (const strategy of this.strategies) {
                 puzzle = strategy.applyToPuzzle(puzzle);
+                if (puzzle.getDepth() >= toDepth) {
+                    return puzzle;
+                }
             }
             if (puzzleAtStart === puzzle) {
                 console.log("No more changes being made. Just returning what we have");
                 return puzzle;
             }
         }
-        return puzzle;
     }
 
 }
